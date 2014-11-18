@@ -4,5 +4,7 @@
     <string name="app_name">Kaub</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="btnWatchStart">Start</string>
+    <string name="btnWatchStop">Stop</string>
 
 </resources>
