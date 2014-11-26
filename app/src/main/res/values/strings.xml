@@ -2,9 +2,21 @@
 <resources>
 
     <string name="app_name">Kaub</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="btnWatchStart">Start</string>
     <string name="btnWatchStop">Stop</string>
+    <string name="team1">Команда 1</string>
+    <string name="team1Count">0</string>
+    <string name="team1FoulCount">0</string>
+    <string name="team1TimeOutCount">0</string>
+    <string name="team1PalyerName1">Игрок 1</string>
+    <string name="team1PalyerName2">Игрок 2</string>
+    <string name="team1PalyerName3">Игрок 3</string>
+    <string name="team1PalyerName4">Игрок 4</string>
+    <string name="team2">Команда 1</string>
+    <string name="team2Count">0</string>
+    <string name="team2FoulCount">0</string>
+    <string name="team2TimeOutCount">0</string>
+
 
 </resources>
