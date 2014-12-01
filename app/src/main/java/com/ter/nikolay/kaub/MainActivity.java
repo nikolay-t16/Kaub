@@ -4,14 +4,23 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Chronometer;
 
 
 public class MainActivity extends Activity {
+    Chronometer mChronometer;
+    Button btnWatchControl;
+    Boolean statusWatchControl = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mChronometer = (Chronometer) findViewById(R.id.chronometer);
+        Button btnWatchControl = (Button) findViewById(R.id.btnWatchControl);
+
     }
 
 
@@ -20,6 +29,20 @@ public class MainActivity extends Activity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+    }
+
+    public void onClickBtnWatchControl(View view) {
+        if (statusWatchControl) {
+
+            mChronometer.stop();
+            statusWatchControl = Boolean.FALSE;
+           // btnWatchControl.setText(R.string.btnWatchStart);
+        } else {
+
+            mChronometer.start();
+            statusWatchControl = Boolean.TRUE;
+            //btnWatchControl.setText(R.string.btnWatchStop);
+        }
     }
 
     @Override
