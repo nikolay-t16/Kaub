@@ -17,6 +17,7 @@
     <string name="team2Count">0</string>
     <string name="team2FoulCount">0</string>
     <string name="team2TimeOutCount">0</string>
-
+    <string name="title_activity_brew_clock">BrewClockActivity</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>

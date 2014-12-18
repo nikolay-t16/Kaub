@@ -14,20 +14,20 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true">
 
-            <Chronometer
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:id="@+id/chronometer"
+                android:id="@+id/mTimerLabel"
+                android:text="10:00.00"
                 android:textSize="16pt">
-            </Chronometer>
+            </TextView>
 
             <Button
-                android:id="@+id/btnWatchControl"
+                android:id="@+id/btnTimerControl"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="onClickBtnWatchControl"
-                android:text="@string/btnWatchStart"
+                android:text="Start"
                 android:textSize="8pt">
             </Button>
         </LinearLayout>

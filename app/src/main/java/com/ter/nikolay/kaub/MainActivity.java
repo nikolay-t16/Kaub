@@ -2,25 +2,29 @@ package com.ter.nikolay.kaub;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Chronometer;
+import android.widget.TextView;
 
 
-public class MainActivity extends Activity {
-    Chronometer mChronometer;
-    Button btnWatchControl;
-    Boolean statusWatchControl = false;
+public class MainActivity extends Activity implements View.OnClickListener {
+    protected TextView mTimerLabel;
+    protected CountDownTimer mTimer;
+    protected Button btnTimerControl;
+    protected long btnTimerVal;
+    protected Boolean mTimerIsOn = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mChronometer = (Chronometer) findViewById(R.id.chronometer);
-        Button btnWatchControl = (Button) findViewById(R.id.btnWatchControl);
-
+        mTimerLabel = (TextView) findViewById(R.id.mTimerLabel);
+        btnTimerControl = (Button) findViewById(R.id.btnTimerControl);
+        btnTimerControl.setOnClickListener(this);
+        btnTimerVal = 10 * 60 * 1000;
     }
 
 
@@ -31,18 +35,53 @@ public class MainActivity extends Activity {
         return true;
     }
 
-    public void onClickBtnWatchControl(View view) {
-        if (statusWatchControl) {
-
-            mChronometer.stop();
-            statusWatchControl = Boolean.FALSE;
-           // btnWatchControl.setText(R.string.btnWatchStart);
-        } else {
-
-            mChronometer.start();
-            statusWatchControl = Boolean.TRUE;
-            //btnWatchControl.setText(R.string.btnWatchStop);
+    public void onClick(View v) {
+        if(v==btnTimerControl){
+            onClickBtnTimerControl(v);
         }
+    }
+    public void onClickBtnTimerControl(View v) {
+        if (mTimerIsOn) {
+            stopTimer();
+        } else {
+            startTimer();
+
+        }
+    }
+
+    public void startTimer() {
+        // Create a new CountDownTimer to track the brew time
+        mTimer = new CountDownTimer(btnTimerVal, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                btnTimerVal = millisUntilFinished;
+                mTimerLabel.setText(String.valueOf(millisUntilFinished / 1000) + "s");
+            }
+
+            @Override
+            public void onFinish() {
+                mTimerIsOn = false;
+
+
+                mTimerLabel.setText("Brew Up!");
+                btnTimerControl.setText("Start");
+            }
+        };
+
+        mTimer.start();
+        btnTimerControl.setText("Stop");
+        mTimerIsOn = true;
+    }
+
+    /**
+     * Stop the brew timer
+     */
+    public void stopTimer() {
+        if(mTimer != null)
+            mTimer.cancel();
+
+        mTimerIsOn = false;
+        btnTimerControl.setText("Start");
     }
 
     @Override

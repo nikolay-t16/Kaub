@@ -16,6 +16,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.ter.nikolay.kaub.BrewClockActivity"
+            android:label="@string/title_activity_brew_clock" >
+        </activity>
     </application>
 
 </manifest>
