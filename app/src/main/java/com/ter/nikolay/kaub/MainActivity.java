@@ -14,7 +14,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     protected TextView mTimerLabel;
     protected CountDownTimer mTimer;
     protected Button btnTimerControl;
-    protected long btnTimerVal;
+    protected int btnTimerVal;
     protected Boolean mTimerIsOn = false;
 
     @Override
@@ -24,7 +24,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
         mTimerLabel = (TextView) findViewById(R.id.mTimerLabel);
         btnTimerControl = (Button) findViewById(R.id.btnTimerControl);
         btnTimerControl.setOnClickListener(this);
-        btnTimerVal = 10 * 60 * 1000;
+        mTimerLabel.setOnClickListener(this);
+        btnTimerVal = getResources().getInteger(R.integer.game_time);
+        mTimerLabel.setText(timeToString( btnTimerVal ) );
+
     }
 
 
@@ -36,7 +39,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     }
 
     public void onClick(View v) {
-        if(v==btnTimerControl){
+        if(v==btnTimerControl|| v==mTimerLabel){
             onClickBtnTimerControl(v);
         }
     }
@@ -48,14 +51,26 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
         }
     }
+    public String timeToString(long time){
 
+        String millis =  String.valueOf(time % 10);
+        String minute =  String.valueOf(time / 60000);
+        String second =  String.valueOf((time % 60000)/1000);
+
+
+
+
+
+
+        return minute+":"+second+"."+millis ;
+    }
     public void startTimer() {
         // Create a new CountDownTimer to track the brew time
-        mTimer = new CountDownTimer(btnTimerVal, 1000) {
+        mTimer = new CountDownTimer(btnTimerVal, 100) {
             @Override
             public void onTick(long millisUntilFinished) {
-                btnTimerVal = millisUntilFinished;
-                mTimerLabel.setText(String.valueOf(millisUntilFinished / 1000) + "s");
+                btnTimerVal = (int) millisUntilFinished;
+                mTimerLabel.setText(timeToString(btnTimerVal));
             }
 
             @Override

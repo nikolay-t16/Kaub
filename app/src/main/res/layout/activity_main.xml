@@ -19,7 +19,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:id="@+id/mTimerLabel"
-                android:text="10:00.00"
+                android:text="10:00.0"
                 android:textSize="16pt">
             </TextView>
 
