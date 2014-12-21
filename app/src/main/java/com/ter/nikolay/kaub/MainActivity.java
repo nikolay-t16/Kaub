@@ -3,6 +3,7 @@ package com.ter.nikolay.kaub;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +15,8 @@ import android.widget.Toast;
 public class MainActivity extends Activity implements View.OnClickListener {
     public static MainActivity instanse;
     protected TextView mTimerLabel;
+    protected TextView player1;
+
     protected CountDownTimer mTimer;
     protected Button btnTimerControl;
     protected int btnTimerVal;
@@ -24,15 +27,37 @@ public class MainActivity extends Activity implements View.OnClickListener {
         instanse = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mTimerLabel = (TextView) findViewById(R.id.mTimerLabel);
-        btnTimerControl = (Button) findViewById(R.id.btnTimerControl);
-        btnTimerControl.setOnClickListener(this);
-        mTimerLabel.setOnClickListener(this);
-        btnTimerVal = getResources().getInteger(R.integer.game_time);
-        mTimerLabel.setText(timeToString( btnTimerVal ) );
+        findElement();
+        setOnClickListener();
+        mTimerLabel.setText(timeToString(btnTimerVal));
+        registerForContextMenu(player1);
 
     }
 
+    protected void findElement() {
+        btnTimerVal      = getResources().getInteger(R.integer.game_time);
+        mTimerLabel      = (TextView) findViewById(R.id.mTimerLabel);
+        btnTimerControl  = (Button) findViewById(R.id.btnTimerControl);
+        player1          = (TextView) findViewById(R.id.player1);
+    }
+
+    protected void setOnClickListener() {
+        btnTimerControl.setOnClickListener(this);
+        mTimerLabel.setOnClickListener(this);
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+
+        switch (v.getId()) {
+            case R.id.player1:
+                menu.add(0, 1, 0, "Red");
+                menu.add(0, 2, 0, "Green");
+                menu.add(0, 3, 0, "Blue");
+                break;
+
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -42,10 +67,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
     }
 
     public void onClick(View v) {
-        if(v==btnTimerControl|| v==mTimerLabel){
+        if (v == btnTimerControl || v == mTimerLabel) {
             onClickBtnTimerControl(v);
         }
     }
+
     public void onClickBtnTimerControl(View v) {
         if (mTimerIsOn) {
             stopTimer();
@@ -54,19 +80,14 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
         }
     }
-    public String timeToString(long time){
 
-        String millis =  String.valueOf(time % 10);
-        String minute =  String.valueOf(time / 60000);
-        String second =  String.valueOf((time % 60000)/1000);
-
-
-
-
-
-
-        return minute+":"+second+"."+millis ;
+    public String timeToString(long time) {
+        String millis = String.valueOf(time % 10);
+        String minute = String.valueOf(time / 60000);
+        String second = String.valueOf((time % 60000) / 1000);
+        return minute + ":" + second + "." + millis;
     }
+
     public void startTimer() {
         // Create a new CountDownTimer to track the brew time
         mTimer = new CountDownTimer(btnTimerVal, 100) {
@@ -96,7 +117,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
      * Stop the brew timer
      */
     public void stopTimer() {
-        if(mTimer != null)
+        if (mTimer != null)
             mTimer.cancel();
 
         mTimerIsOn = false;
@@ -117,4 +138,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
         return super.onOptionsItemSelected(item);
     }
+
+
 }
