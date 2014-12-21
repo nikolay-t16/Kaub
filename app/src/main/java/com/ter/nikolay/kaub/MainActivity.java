@@ -8,9 +8,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class MainActivity extends Activity implements View.OnClickListener {
+    public static MainActivity instanse;
     protected TextView mTimerLabel;
     protected CountDownTimer mTimer;
     protected Button btnTimerControl;
@@ -19,6 +21,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        instanse = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mTimerLabel = (TextView) findViewById(R.id.mTimerLabel);
@@ -76,12 +79,13 @@ public class MainActivity extends Activity implements View.OnClickListener {
             @Override
             public void onFinish() {
                 mTimerIsOn = false;
-
-
-                mTimerLabel.setText("Brew Up!");
+                Toast.makeText(MainActivity.instanse, "Время матча вышло", Toast.LENGTH_LONG).show();
+                mTimerLabel.setTextColor(getResources().getColor(R.color.end_of_timer));
+                mTimerLabel.setText("00:00.0!");
                 btnTimerControl.setText("Start");
             }
         };
+
 
         mTimer.start();
         btnTimerControl.setText("Stop");
