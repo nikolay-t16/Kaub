@@ -32,6 +32,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
         mTimerLabel.setText(timeToString(btnTimerVal));
         registerForContextMenu(player1);
 
+        test();
+    }
+
+    private void test(){
+        // trace("Gadya's test");
+        System.out.print("Gadya's test!");
     }
 
     protected void findElement() {
