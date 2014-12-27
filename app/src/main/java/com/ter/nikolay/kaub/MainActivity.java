@@ -183,7 +183,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
             stopTimer();
         } else {
             startTimer();
-
         }
     }
 
