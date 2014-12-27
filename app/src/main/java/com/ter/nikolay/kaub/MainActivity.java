@@ -20,6 +20,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
     protected CountDownTimer mTimer;
     protected Button btnTimerControl;
     protected int btnTimerVal;
+    protected int team1Count = 0;
+    protected int team1FoulCount = 0;
+    protected int team2Count = 0;
+    protected int team2FoulCount = 0;
     protected Boolean mTimerIsOn = false;
 
     @Override
@@ -51,11 +55,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
         switch (v.getId()) {
             case R.id.player1:
-                menu.add(0, 1, 0, "Red");
-                menu.add(0, 2, 0, "Green");
-                menu.add(0, 3, 0, "Blue");
+                getMenuInflater().inflate(R.menu.menu_player, menu);
                 break;
-
         }
     }
 
