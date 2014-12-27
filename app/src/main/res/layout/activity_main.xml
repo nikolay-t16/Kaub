@@ -55,11 +55,12 @@
             android:layout_gravity="center">
 
             <TextView
+                android:id="@+id/team1Count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5pt"
                 android:layout_marginRight="5pt"
-                android:text="@string/team1Count"
+                android:text="0"
                 android:textSize="10pt">
             </TextView>
 
@@ -72,11 +73,12 @@
             </TextView>
 
             <TextView
+                android:id="@+id/team2Count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5pt"
                 android:layout_marginRight="5pt"
-                android:text="@string/team2Count"
+                android:text="0"
                 android:textSize="10pt">
             </TextView>
         </LinearLayout>
@@ -97,6 +99,60 @@
 
 
     </FrameLayout>
+    <FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:text="Фолы"
+            android:textSize="10pt">
+        </TextView>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/team1FoulCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5pt"
+                android:layout_marginRight="5pt"
+                android:text="0"
+                android:textSize="10pt">
+            </TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:text=":"
+                android:textSize="10pt">
+            </TextView>
+
+            <TextView
+                android:id="@+id/team2FoulCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5pt"
+                android:layout_marginRight="5pt"
+                android:text="@string/team2Count"
+                android:textSize="10pt">
+            </TextView>
+        </LinearLayout>
+
+
+
+
+    </FrameLayout>
+
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -121,7 +177,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:id="@+id/player1"
+                android:id="@+id/team1Player1"
                 android:text="@string/team1PalyerName1"/>
         </LinearLayout>
         <LinearLayout
@@ -130,6 +186,7 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/team1Player2"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:text="@string/team1PalyerName2"/>
@@ -140,6 +197,7 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/team1Player3"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:text="@string/team1PalyerName3"/>
@@ -150,6 +208,7 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/team1Player4"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:text="@string/team1PalyerName4"/>
@@ -176,9 +235,10 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/team2Player1"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:text="@string/team1PalyerName2"/>
+                android:text="Игрок 1"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="fill_parent"
@@ -186,9 +246,10 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/team2Player2"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:text="@string/team1PalyerName3"/>
+                android:text="Игрок 2"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="fill_parent"
@@ -196,9 +257,10 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/team2Player3"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:text="@string/team1PalyerName4"/>
+                android:text="Игрок 3"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="fill_parent"
@@ -206,6 +268,7 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/team2Player4"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:text="@string/team1PalyerName4"/>

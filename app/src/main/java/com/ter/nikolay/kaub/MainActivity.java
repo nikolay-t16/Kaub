@@ -15,15 +15,29 @@ import android.widget.Toast;
 public class MainActivity extends Activity implements View.OnClickListener {
     public static MainActivity instanse;
     protected TextView mTimerLabel;
-    protected TextView player1;
+    protected TextView team1Player1;
+    protected TextView team1Player2;
+    protected TextView team1Player3;
+    protected TextView team1Player4;
+    protected TextView team2Player1;
+    protected TextView team2Player2;
+    protected TextView team2Player3;
+    protected TextView team2Player4;
+
+    protected TextView Team1Count;
+    protected TextView Team1FoulCount;
+    protected TextView Team2Count;
+    protected TextView Team2FoulCount;
+
+    protected int playerSelected = 0;
+    protected int Team1CountInt = 0;
+    protected int Team1FoulCountInt = 0;
+    protected int Team2CountInt = 0;
+    protected int Team2FoulCountInt = 0;
 
     protected CountDownTimer mTimer;
     protected Button btnTimerControl;
     protected int btnTimerVal;
-    protected int team1Count = 0;
-    protected int team1FoulCount = 0;
-    protected int team2Count = 0;
-    protected int team2FoulCount = 0;
     protected Boolean mTimerIsOn = false;
 
     @Override
@@ -34,15 +48,39 @@ public class MainActivity extends Activity implements View.OnClickListener {
         findElement();
         setOnClickListener();
         mTimerLabel.setText(timeToString(btnTimerVal));
-        registerForContextMenu(player1);
+        registerContextMenu();
 
+    }
+
+
+    protected void registerContextMenu(){
+        registerForContextMenu(team1Player1);
+        registerForContextMenu(team1Player2);
+        registerForContextMenu(team1Player3);
+        registerForContextMenu(team1Player4);
+        registerForContextMenu(team2Player1);
+        registerForContextMenu(team2Player2);
+        registerForContextMenu(team2Player3);
+        registerForContextMenu(team2Player4);
     }
 
     protected void findElement() {
         btnTimerVal      = getResources().getInteger(R.integer.game_time);
         mTimerLabel      = (TextView) findViewById(R.id.mTimerLabel);
         btnTimerControl  = (Button) findViewById(R.id.btnTimerControl);
-        player1          = (TextView) findViewById(R.id.player1);
+        team1Player1     = (TextView) findViewById(R.id.team1Player1);
+        team1Player2     = (TextView) findViewById(R.id.team1Player2);
+        team1Player3     = (TextView) findViewById(R.id.team1Player3);
+        team1Player4     = (TextView) findViewById(R.id.team1Player4);
+        team2Player1     = (TextView) findViewById(R.id.team2Player1);
+        team2Player2     = (TextView) findViewById(R.id.team2Player2);
+        team2Player3     = (TextView) findViewById(R.id.team2Player3);
+        team2Player4     = (TextView) findViewById(R.id.team2Player4);
+
+        Team1Count       = (TextView) findViewById(R.id.team1Count);
+        Team1FoulCount   = (TextView) findViewById(R.id.team1FoulCount);
+        Team2Count       = (TextView) findViewById(R.id.team2Count);
+        Team2FoulCount   = (TextView) findViewById(R.id.team2FoulCount);
     }
 
     protected void setOnClickListener() {
@@ -54,10 +92,77 @@ public class MainActivity extends Activity implements View.OnClickListener {
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
 
         switch (v.getId()) {
-            case R.id.player1:
+            case R.id.team1Player1:
+                playerSelected = 1;
+                getMenuInflater().inflate(R.menu.menu_player, menu);
+                break;
+            case R.id.team1Player2:
+                playerSelected = 2;
+                getMenuInflater().inflate(R.menu.menu_player, menu);
+                break;
+            case R.id.team1Player3:
+                playerSelected = 3;
+                getMenuInflater().inflate(R.menu.menu_player, menu);
+                break;
+            case R.id.team1Player4:
+                playerSelected = 4;
+                getMenuInflater().inflate(R.menu.menu_player, menu);
+                break;
+            case R.id.team2Player1:
+                playerSelected = 5;
+                getMenuInflater().inflate(R.menu.menu_player, menu);
+                break;
+            case R.id.team2Player2:
+                playerSelected = 6;
+                getMenuInflater().inflate(R.menu.menu_player, menu);
+                break;
+            case R.id.team2Player3:
+                playerSelected = 7;
+                getMenuInflater().inflate(R.menu.menu_player, menu);
+                break;
+            case R.id.team2Player4:
+                playerSelected = 8;
                 getMenuInflater().inflate(R.menu.menu_player, menu);
                 break;
         }
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.add_point:
+                if(playerSelected<5){
+                    Team1CountInt++;
+                    Team1Count.setText(Integer.toString(Team1CountInt));
+                }else{
+                    Team2CountInt++;
+                    Team2Count.setText(Integer.toString(Team2CountInt));
+                }
+
+                break;
+            case R.id.add_two_point:
+                if(playerSelected<5){
+                    Team1CountInt+=2;
+                    Team1Count.setText(Integer.toString(Team1CountInt));
+                }else{
+                    Team2CountInt+=2;
+                    Team1Count.setText(Integer.toString(Team2CountInt));
+                }
+
+                break;
+            case R.id.add_foul:
+                if(playerSelected<5){
+                    Team1FoulCountInt++;
+                    Team1FoulCount.setText(Integer.toString(Team1FoulCountInt));
+                }else{
+                    Team2FoulCountInt++;
+                    Team2FoulCount.setText(Integer.toString(Team2FoulCountInt));
+                }
+
+                break;
+
+        }
+        return super.onContextItemSelected(item);
     }
 
     @Override
@@ -139,6 +244,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
         return super.onOptionsItemSelected(item);
     }
+
 
 
 }

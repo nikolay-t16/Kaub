@@ -7,6 +7,6 @@
     <item android:id="@+id/add_two_point"
         android:title="Два очка"/>
     <item android:id="@+id/add_foul"
-        android:title="Два очка"/>
+        android:title="Фол"/>
 
 </menu>
