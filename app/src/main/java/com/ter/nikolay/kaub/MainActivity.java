@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 
 public class MainActivity extends Activity implements View.OnClickListener {
+
     public static MainActivity instanse;
     protected TextView mTimerLabel;
     protected TextView team1Player1;
@@ -138,17 +139,18 @@ public class MainActivity extends Activity implements View.OnClickListener {
                     Team2CountInt++;
                     Team2Count.setText(Integer.toString(Team2CountInt));
                 }
-
+                checkPointCount();
                 break;
             case R.id.add_two_point:
                 if(playerSelected<5){
                     Team1CountInt+=2;
                     Team1Count.setText(Integer.toString(Team1CountInt));
+
                 }else{
                     Team2CountInt+=2;
                     Team1Count.setText(Integer.toString(Team2CountInt));
                 }
-
+                checkPointCount();
                 break;
             case R.id.add_foul:
                 if(playerSelected<5){
@@ -164,7 +166,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
         }
         return super.onContextItemSelected(item);
     }
-
+protected void checkPointCount(){
+    if(Team1CountInt>getResources().getInteger(R.integer.game_point_limit)||
+            Team2CountInt>getResources().getInteger(R.integer.game_point_limit)){
+        stopGame();
+    }
+}
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -205,8 +212,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
             @Override
             public void onFinish() {
                 mTimerIsOn = false;
-                Toast.makeText(MainActivity.instanse, "Время матча вышло", Toast.LENGTH_LONG).show();
-                mTimerLabel.setTextColor(getResources().getColor(R.color.end_of_timer));
+                stopGame();
                 mTimerLabel.setText("00:00.0!");
                 btnTimerControl.setText("Start");
             }
@@ -242,6 +248,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    protected void stopGame(){
+        stopTimer();
+        mTimerLabel.setTextColor(getResources().getColor(R.color.end_of_timer));
+        Toast.makeText(MainActivity.instanse, "Время матча вышло", Toast.LENGTH_LONG).show();
     }
 
 

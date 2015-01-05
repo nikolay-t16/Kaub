@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <integer name="game_time">600000</integer>
+    <integer name="game_foul_limit">4</integer>
+    <integer name="game_point_limit">21</integer>
 </resources>
