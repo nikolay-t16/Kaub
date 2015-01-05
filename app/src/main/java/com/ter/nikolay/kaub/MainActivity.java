@@ -190,6 +190,7 @@ protected void checkPointCount(){
             stopTimer();
         } else {
             startTimer();
+
         }
     }
 
