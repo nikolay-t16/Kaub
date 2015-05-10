@@ -25,10 +25,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
     protected TextView team2Player3;
     protected TextView team2Player4;
 
-    protected TextView Team1Count;
-    protected TextView Team1FoulCount;
-    protected TextView Team2Count;
-    protected TextView Team2FoulCount;
+    protected TextView[] TeamPointCount;
+    protected TextView[] TeamFoulCount;
+
 
     protected int playerSelected = 0;
     protected int Team1CountInt = 0;
@@ -38,18 +37,17 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     protected CountDownTimer mTimer;
     protected Button btnTimerControl;
-    protected int btnTimerVal;
     protected Boolean mTimerIsOn = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         instanse = this;
-        modelGame = new ModelGame(1);
+        modelGame = new ModelGame(1,3,2,600000);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         findElement();
         setOnClickListener();
-        mTimerLabel.setText(timeToString(btnTimerVal));
+        mTimerLabel.setText(timeToString(modelGame.getTimerVal()));
         registerContextMenu();
 
     }
@@ -67,7 +65,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
     }
 
     protected void findElement() {
-        btnTimerVal      = getResources().getInteger(R.integer.game_time);
         mTimerLabel      = (TextView) findViewById(R.id.mTimerLabel);
         btnTimerControl  = (Button) findViewById(R.id.btnTimerControl);
         team1Player1     = (TextView) findViewById(R.id.team1Player1);
@@ -79,10 +76,14 @@ public class MainActivity extends Activity implements View.OnClickListener {
         team2Player3     = (TextView) findViewById(R.id.team2Player3);
         team2Player4     = (TextView) findViewById(R.id.team2Player4);
 
-        Team1Count       = (TextView) findViewById(R.id.team1Count);
-        Team1FoulCount   = (TextView) findViewById(R.id.team1FoulCount);
-        Team2Count       = (TextView) findViewById(R.id.team2Count);
-        Team2FoulCount   = (TextView) findViewById(R.id.team2FoulCount);
+        TeamPointCount = new TextView[2];
+        TeamPointCount[0] =(TextView) findViewById(R.id.team1Count);
+        TeamPointCount[1] =(TextView) findViewById(R.id.team2Count);
+
+        TeamFoulCount = new TextView[2];
+        TeamFoulCount[0] =(TextView) findViewById(R.id.team1FoulCount);
+        TeamFoulCount[1] =(TextView) findViewById(R.id.team2FoulCount);
+
     }
 
     protected void setOnClickListener() {
@@ -133,34 +134,16 @@ public class MainActivity extends Activity implements View.OnClickListener {
     public boolean onContextItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.add_point:
-                if(playerSelected<5){
-                    Team1CountInt++;
-                    Team1Count.setText(Integer.toString(Team1CountInt));
-                }else{
-                    Team2CountInt++;
-                    Team2Count.setText(Integer.toString(Team2CountInt));
-                }
+                TeamPointCount[playerSelected<5?0:1].setText(Integer.toString(modelGame.addPoint(playerSelected, 1)));
+
                 checkPointCount();
                 break;
             case R.id.add_two_point:
-                if(playerSelected<5){
-                    Team1CountInt+=2;
-                    Team1Count.setText(Integer.toString(Team1CountInt));
-
-                }else{
-                    Team2CountInt+=2;
-                    Team1Count.setText(Integer.toString(Team2CountInt));
-                }
+                TeamPointCount[playerSelected<5?0:1].setText(Integer.toString(modelGame.addPoint(playerSelected, 2)));
                 checkPointCount();
                 break;
             case R.id.add_foul:
-                if(playerSelected<5){
-                    Team1FoulCountInt++;
-                    Team1FoulCount.setText(Integer.toString(Team1FoulCountInt));
-                }else{
-                    Team2FoulCountInt++;
-                    Team2FoulCount.setText(Integer.toString(Team2FoulCountInt));
-                }
+                TeamFoulCount[playerSelected<5?0:1].setText(Integer.toString(modelGame.addFoul(playerSelected)));
 
                 break;
 
@@ -204,11 +187,11 @@ protected void checkPointCount(){
 
     public void startTimer() {
         // Create a new CountDownTimer to track the brew time
-        mTimer = new CountDownTimer(btnTimerVal, 100) {
+        mTimer = new CountDownTimer(modelGame.getTimerVal(), 50) {
             @Override
             public void onTick(long millisUntilFinished) {
-                btnTimerVal = (int) millisUntilFinished;
-                mTimerLabel.setText(timeToString(btnTimerVal));
+                modelGame.addTime((int) millisUntilFinished);
+                mTimerLabel.setText(timeToString(millisUntilFinished));
             }
 
             @Override
