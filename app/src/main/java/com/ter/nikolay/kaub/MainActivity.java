@@ -11,10 +11,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 public class MainActivity extends Activity implements View.OnClickListener {
 
     public static MainActivity instanse;
+    protected ModelGame modelGame;
     protected TextView mTimerLabel;
     protected TextView team1Player1;
     protected TextView team1Player2;
@@ -44,6 +44,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         instanse = this;
+        modelGame = new ModelGame(1);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         findElement();
