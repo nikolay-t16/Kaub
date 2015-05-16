@@ -5,9 +5,9 @@ package com.ter.nikolay.kaub;
  */
 public class ModelGame {
     /**
-     * 1 - номер игрока,
-     * 2 - номер действия
-     * 3 - время
+     * 1 - 1 РѕС‡РєРѕ
+     * 2 - 2 Р»С‡РєР°
+     * 3 - Р¤РѕР»
      */
     protected int[][]   GameStat;
     protected int[]     FoulCount;
@@ -32,7 +32,7 @@ public class ModelGame {
      *
      * @param player_num
      * @param action_num
-     * 1 - 1 очко, 2 - 2 очка, 3 - фол
+     * 1 - 1 РѕС‡РєРѕ, 2 - 2 РѕС‡РєР°, 3 - С„РѕР»
      */
     public void addStat(int player_num,int action_num){
         int i = 0;
@@ -62,5 +62,23 @@ public class ModelGame {
         return TimerVal;
     }
 
+    public int checkPointCount(){
+        if(PointCount[0]>=PointLimit) {
+            return 1;
+        }
+        if(PointCount[1]>=PointLimit) {
+            return 2;
+        }
+        return 0;
+    }
+    public int chekFoulCount(){
+        if(FoulCount[0]>=FoulLimit) {
+            return 1;
+        }
+        if(FoulCount[1]>=FoulLimit) {
+            return 2;
+        }
+        return 0;
+    }
 
 }

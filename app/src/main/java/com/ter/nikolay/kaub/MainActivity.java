@@ -1,9 +1,11 @@
 package com.ter.nikolay.kaub;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,14 +18,15 @@ public class MainActivity extends Activity implements View.OnClickListener {
     public static MainActivity instanse;
     protected ModelGame modelGame;
     protected TextView mTimerLabel;
-    protected TextView team1Player1;
-    protected TextView team1Player2;
-    protected TextView team1Player3;
-    protected TextView team1Player4;
-    protected TextView team2Player1;
-    protected TextView team2Player2;
-    protected TextView team2Player3;
-    protected TextView team2Player4;
+    protected TextView[] playerLabel;
+    protected TextView playerLabel1;
+    protected TextView playerLabel2;
+    protected TextView playerLabel3;
+    protected TextView playerLabel4;
+    protected TextView playerLabel5;
+    protected TextView playerLabel6;
+    protected TextView playerLabel7;
+    protected TextView playerLabel8;
 
     protected TextView[] TeamPointCount;
     protected TextView[] TeamFoulCount;
@@ -39,6 +42,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
     protected Button btnTimerControl;
     protected Boolean mTimerIsOn = false;
 
+    Context context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         instanse = this;
@@ -48,33 +53,36 @@ public class MainActivity extends Activity implements View.OnClickListener {
         findElement();
         setOnClickListener();
         mTimerLabel.setText(timeToString(modelGame.getTimerVal()));
-        registerContextMenu();
+       // registerContextMenu();
+        context = MainActivity.this;
+
 
     }
 
 
     protected void registerContextMenu(){
-        registerForContextMenu(team1Player1);
-        registerForContextMenu(team1Player2);
-        registerForContextMenu(team1Player3);
-        registerForContextMenu(team1Player4);
-        registerForContextMenu(team2Player1);
-        registerForContextMenu(team2Player2);
-        registerForContextMenu(team2Player3);
-        registerForContextMenu(team2Player4);
+        registerForContextMenu(playerLabel1);
+        registerForContextMenu(playerLabel2);
+        registerForContextMenu(playerLabel3);
+        registerForContextMenu(playerLabel4);
+        registerForContextMenu(playerLabel5);
+        registerForContextMenu(playerLabel6);
+        registerForContextMenu(playerLabel7);
+        registerForContextMenu(playerLabel8);
     }
 
     protected void findElement() {
         mTimerLabel      = (TextView) findViewById(R.id.mTimerLabel);
         btnTimerControl  = (Button) findViewById(R.id.btnTimerControl);
-        team1Player1     = (TextView) findViewById(R.id.team1Player1);
-        team1Player2     = (TextView) findViewById(R.id.team1Player2);
-        team1Player3     = (TextView) findViewById(R.id.team1Player3);
-        team1Player4     = (TextView) findViewById(R.id.team1Player4);
-        team2Player1     = (TextView) findViewById(R.id.team2Player1);
-        team2Player2     = (TextView) findViewById(R.id.team2Player2);
-        team2Player3     = (TextView) findViewById(R.id.team2Player3);
-        team2Player4     = (TextView) findViewById(R.id.team2Player4);
+        playerLabel = new TextView[8];
+        playerLabel[0] = (TextView) findViewById(R.id.playerLabel1);
+        playerLabel[1] = (TextView) findViewById(R.id.playerLabel2);
+        playerLabel[2] = (TextView) findViewById(R.id.playerLabel3);
+        playerLabel[3] = (TextView) findViewById(R.id.playerLabel4);
+        playerLabel[4] = (TextView) findViewById(R.id.playerLabel5);
+        playerLabel[5] = (TextView) findViewById(R.id.playerLabel6);
+        playerLabel[6] = (TextView) findViewById(R.id.playerLabel7);
+        playerLabel[7] = (TextView) findViewById(R.id.playerLabel8);
 
         TeamPointCount = new TextView[2];
         TeamPointCount[0] =(TextView) findViewById(R.id.team1Count);
@@ -89,73 +97,28 @@ public class MainActivity extends Activity implements View.OnClickListener {
     protected void setOnClickListener() {
         btnTimerControl.setOnClickListener(this);
         mTimerLabel.setOnClickListener(this);
+        playerLabel[0].setOnClickListener(this);
+        playerLabel[1].setOnClickListener(this);
+        playerLabel[2].setOnClickListener(this);
+        playerLabel[3].setOnClickListener(this);
+        playerLabel[4].setOnClickListener(this);
+        playerLabel[5].setOnClickListener(this);
+        playerLabel[6].setOnClickListener(this);
+        playerLabel[7].setOnClickListener(this);
     }
 
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-
-        switch (v.getId()) {
-            case R.id.team1Player1:
-                playerSelected = 1;
-                getMenuInflater().inflate(R.menu.menu_player, menu);
-                break;
-            case R.id.team1Player2:
-                playerSelected = 2;
-                getMenuInflater().inflate(R.menu.menu_player, menu);
-                break;
-            case R.id.team1Player3:
-                playerSelected = 3;
-                getMenuInflater().inflate(R.menu.menu_player, menu);
-                break;
-            case R.id.team1Player4:
-                playerSelected = 4;
-                getMenuInflater().inflate(R.menu.menu_player, menu);
-                break;
-            case R.id.team2Player1:
-                playerSelected = 5;
-                getMenuInflater().inflate(R.menu.menu_player, menu);
-                break;
-            case R.id.team2Player2:
-                playerSelected = 6;
-                getMenuInflater().inflate(R.menu.menu_player, menu);
-                break;
-            case R.id.team2Player3:
-                playerSelected = 7;
-                getMenuInflater().inflate(R.menu.menu_player, menu);
-                break;
-            case R.id.team2Player4:
-                playerSelected = 8;
-                getMenuInflater().inflate(R.menu.menu_player, menu);
-                break;
+    protected void checkPointCount(){
+        int CheckPointCount = modelGame.checkPointCount();
+        if(CheckPointCount>0){
+            stopGame("Команда "+Integer.toString(CheckPointCount)+" выйграла");
         }
     }
-
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.add_point:
-                TeamPointCount[playerSelected<5?0:1].setText(Integer.toString(modelGame.addPoint(playerSelected, 1)));
-
-                checkPointCount();
-                break;
-            case R.id.add_two_point:
-                TeamPointCount[playerSelected<5?0:1].setText(Integer.toString(modelGame.addPoint(playerSelected, 2)));
-                checkPointCount();
-                break;
-            case R.id.add_foul:
-                TeamFoulCount[playerSelected<5?0:1].setText(Integer.toString(modelGame.addFoul(playerSelected)));
-
-                break;
-
+    protected void checkFoulCount(){
+        int ChekFoulCount = modelGame.chekFoulCount();
+        if(modelGame.chekFoulCount() > 0){
+            Toast.makeText(MainActivity.instanse, "Команда "+Integer.toString(ChekFoulCount)+" выйграла", Toast.LENGTH_LONG).show();
         }
-        return super.onContextItemSelected(item);
     }
-protected void checkPointCount(){
-    if(Team1CountInt>getResources().getInteger(R.integer.game_point_limit)||
-            Team2CountInt>getResources().getInteger(R.integer.game_point_limit)){
-        stopGame();
-    }
-}
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -166,7 +129,46 @@ protected void checkPointCount(){
     public void onClick(View v) {
         if (v == btnTimerControl || v == mTimerLabel) {
             onClickBtnTimerControl(v);
+        }else{
+            for (int i = 0; i < playerLabel.length; i += 1){
+                if(v == playerLabel[i]){
+                    onClickPlayer(v,i+1);
+                    break;
+                }
+            }
         }
+    }
+
+    protected void onClickPlayer(View v,int playerNum){
+        playerSelected = playerNum;
+        AlertDialog.Builder ad;
+        final String[] mCatsName ={"1 очко", "2 очка", "фол", "Отмена"};
+
+        ad = new AlertDialog.Builder(this);
+        ad.setTitle("Команда "+(playerSelected<5?'1':'2')+" игрок "+Integer.toString(playerSelected < 5 ? playerSelected : playerSelected-4)); // заголовок для диалога
+        ad.setItems(mCatsName, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+                switch (item) {
+                    case 0:
+                        TeamPointCount[playerSelected < 5 ? 0 : 1].setText(Integer.toString(modelGame.addPoint(playerSelected, 1)));
+                        checkPointCount();
+                        break;
+                    case 1:
+                        TeamPointCount[playerSelected < 5 ? 0 : 1].setText(Integer.toString(modelGame.addPoint(playerSelected, 2)));
+                        checkPointCount();
+                        break;
+                    case 2:
+                        TeamFoulCount[playerSelected < 5 ? 0 : 1].setText(Integer.toString(modelGame.addFoul(playerSelected)));
+
+                        break;
+
+                }
+            }
+        });
+        ad.setCancelable(false);
+        ad.create();
+        ad.show();
     }
 
     public void onClickBtnTimerControl(View v) {
@@ -197,7 +199,7 @@ protected void checkPointCount(){
             @Override
             public void onFinish() {
                 mTimerIsOn = false;
-                stopGame();
+                stopGame("Время игры закончилось");
                 mTimerLabel.setText("00:00.0!");
                 btnTimerControl.setText("Start");
             }
@@ -234,10 +236,11 @@ protected void checkPointCount(){
 
         return super.onOptionsItemSelected(item);
     }
-    protected void stopGame(){
+    protected void stopGame(String mes){
         stopTimer();
         mTimerLabel.setTextColor(getResources().getColor(R.color.end_of_timer));
-        Toast.makeText(MainActivity.instanse, "Время матча вышло", Toast.LENGTH_LONG).show();
+
+        Toast.makeText(MainActivity.instanse, mes, Toast.LENGTH_LONG).show();
     }
 
 

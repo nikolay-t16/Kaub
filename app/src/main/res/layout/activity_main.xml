@@ -177,7 +177,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:id="@+id/team1Player1"
+                android:id="@+id/playerLabel1"
                 android:text="@string/team1PalyerName1"/>
         </LinearLayout>
         <LinearLayout
@@ -186,7 +186,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/team1Player2"
+                android:id="@+id/playerLabel2"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:text="@string/team1PalyerName2"/>
@@ -197,7 +197,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/team1Player3"
+                android:id="@+id/playerLabel3"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:text="@string/team1PalyerName3"/>
@@ -208,7 +208,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/team1Player4"
+                android:id="@+id/playerLabel4"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:text="@string/team1PalyerName4"/>
@@ -235,7 +235,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/team2Player1"
+                android:id="@+id/playerLabel5"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:text="Игрок 1"/>
@@ -246,7 +246,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/team2Player2"
+                android:id="@+id/playerLabel6"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:text="Игрок 2"/>
@@ -257,7 +257,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/team2Player3"
+                android:id="@+id/playerLabel7"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:text="Игрок 3"/>
@@ -268,7 +268,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/team2Player4"
+                android:id="@+id/playerLabel8"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:text="@string/team1PalyerName4"/>
