@@ -179,6 +179,32 @@
                 android:layout_height="fill_parent"
                 android:id="@+id/playerLabel1"
                 android:text="@string/team1PalyerName1"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/onePointPlayer1"
+                android:layout_marginLeft="20pt"
+                android:onClick="onClickPlayerAction"
+                android:text="1 очко"
+                android:textSize="4pt"
+                />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/twoPointPlayer1"
+                android:onClick="onClickPlayerAction"
+                android:layout_marginLeft="10pt"
+                android:text="2 очко"
+                android:textSize="4pt"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/foulPlayer1"
+                android:onClick="onClickPlayerAction"
+                android:layout_marginLeft="10pt"
+                android:text="фол"
+                android:textSize="4pt"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="fill_parent"
@@ -190,6 +216,31 @@
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:text="@string/team1PalyerName2"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/onePointPlayer2"
+                android:layout_marginLeft="20pt"
+                android:onClick="onClickPlayerAction"
+                android:text="1 очко"
+                android:textSize="4pt"
+                />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/twoPointPlayer2"
+                android:onClick="onClickPlayerAction"
+                android:layout_marginLeft="10pt"
+                android:text="2 очко"
+                android:textSize="4pt"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/foulPlayer2"
+                android:onClick="onClickPlayerAction"
+                android:layout_marginLeft="10pt"
+                android:text="фол"
+                android:textSize="4pt"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="fill_parent"
@@ -201,6 +252,31 @@
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:text="@string/team1PalyerName3"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/onePointPlayer3"
+                android:layout_marginLeft="20pt"
+                android:onClick="onClickPlayerAction"
+                android:text="1 очко"
+                android:textSize="4pt"
+                />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/twoPointPlayer3"
+                android:onClick="onClickPlayerAction"
+                android:layout_marginLeft="10pt"
+                android:text="2 очко"
+                android:textSize="4pt"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/foulPlayer3"
+                android:onClick="onClickPlayerAction"
+                android:layout_marginLeft="10pt"
+                android:text="фол"
+                android:textSize="4pt"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="fill_parent"
@@ -212,6 +288,31 @@
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:text="@string/team1PalyerName4"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/onePointPlayer4"
+                android:layout_marginLeft="20pt"
+                android:onClick="onClickPlayerAction"
+                android:text="1 очко"
+                android:textSize="4pt"
+                />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/twoPointPlayer4"
+                android:onClick="onClickPlayerAction"
+                android:layout_marginLeft="10pt"
+                android:text="2 очко"
+                android:textSize="4pt"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/foulPlayer4"
+                android:onClick="onClickPlayerAction"
+                android:layout_marginLeft="10pt"
+                android:text="фол"
+                android:textSize="4pt"/>
         </LinearLayout>
     </LinearLayout>
     <LinearLayout
@@ -239,6 +340,31 @@
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:text="Игрок 1"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/onePointPlayer5"
+                android:layout_marginLeft="20pt"
+                android:onClick="onClickPlayerAction"
+                android:text="1 очко"
+                android:textSize="4pt"
+                />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/twoPointPlayer5"
+                android:onClick="onClickPlayerAction"
+                android:layout_marginLeft="10pt"
+                android:text="2 очко"
+                android:textSize="4pt"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/foulPlayer5"
+                android:onClick="onClickPlayerAction"
+                android:layout_marginLeft="10pt"
+                android:text="фол"
+                android:textSize="4pt"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="fill_parent"
@@ -250,6 +376,31 @@
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:text="Игрок 2"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/onePointPlayer6"
+                android:layout_marginLeft="20pt"
+                android:onClick="onClickPlayerAction"
+                android:text="1 очко"
+                android:textSize="4pt"
+                />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/twoPointPlayer6"
+                android:onClick="onClickPlayerAction"
+                android:layout_marginLeft="10pt"
+                android:text="2 очко"
+                android:textSize="4pt"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/foulPlayer6"
+                android:onClick="onClickPlayerAction"
+                android:layout_marginLeft="10pt"
+                android:text="фол"
+                android:textSize="4pt"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="fill_parent"
@@ -261,6 +412,31 @@
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:text="Игрок 3"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/onePointPlayer7"
+                android:layout_marginLeft="20pt"
+                android:onClick="onClickPlayerAction"
+                android:text="1 очко"
+                android:textSize="4pt"
+                />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/twoPointPlayer7"
+                android:onClick="onClickPlayerAction"
+                android:layout_marginLeft="10pt"
+                android:text="2 очко"
+                android:textSize="4pt"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/foulPlayer7"
+                android:onClick="onClickPlayerAction"
+                android:layout_marginLeft="10pt"
+                android:text="фол"
+                android:textSize="4pt"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="fill_parent"
@@ -272,6 +448,31 @@
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:text="@string/team1PalyerName4"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/onePointPlayer8"
+                android:layout_marginLeft="20pt"
+                android:onClick="onClickPlayerAction"
+                android:text="1 очко"
+                android:textSize="4pt"
+                />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/twoPointPlayer8"
+                android:onClick="onClickPlayerAction"
+                android:layout_marginLeft="10pt"
+                android:text="2 очко"
+                android:textSize="4pt"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/foulPlayer8"
+                android:onClick="onClickPlayerAction"
+                android:layout_marginLeft="10pt"
+                android:text="фол"
+                android:textSize="4pt"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
