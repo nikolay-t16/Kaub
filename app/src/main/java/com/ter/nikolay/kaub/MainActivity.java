@@ -10,79 +10,108 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity implements View.OnClickListener {
 
     public static MainActivity instanse;
-    protected ModelGame modelGame;
-    protected TextView mTimerLabel;
-    protected TextView[] playerLabel;
-    protected TextView playerLabel1;
-    protected TextView playerLabel2;
-    protected TextView playerLabel3;
-    protected TextView playerLabel4;
-    protected TextView playerLabel5;
-    protected TextView playerLabel6;
-    protected TextView playerLabel7;
-    protected TextView playerLabel8;
+    protected ModelGame      modelGame;
+    protected TextView       mTimerLabel;
+    protected TextView[]     playerLabel;
 
-    protected TextView[] TeamPointCount;
-    protected TextView[] TeamFoulCount;
+    protected TextView[]     TeamPointCount;
+    protected TextView[]     TeamFoulCount;
+    protected LinearLayout   statLL;
+    protected TextView[]     StatTextView;
 
-
-    protected int playerSelected = 0;
-    protected int Team1CountInt = 0;
-    protected int Team1FoulCountInt = 0;
-    protected int Team2CountInt = 0;
-    protected int Team2FoulCountInt = 0;
-
+    protected int            playerSelected = 0;
+    protected int            curentSatat = 0;
     protected CountDownTimer mTimer;
-    protected Button btnTimerControl;
-    protected Boolean mTimerIsOn = false;
+    protected Button         btnTimerControl;
+    protected Boolean        mTimerIsOn = false;
 
+    protected AlertDialog.Builder playerActionDialog;
+    protected AlertDialog.Builder statDelDialog;
     Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         instanse = this;
-        modelGame = new ModelGame(1,3,2,600000);
+        modelGame = new ModelGame(1, 3, 2, 600000);
+        StatTextView = new TextView[100];
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         findElement();
         setOnClickListener();
-        mTimerLabel.setText(timeToString(modelGame.getTimerVal()));
-       // registerContextMenu();
+        mTimerLabel.setText(modelGame.getStringTimerVal());
         context = MainActivity.this;
-
+        createDialog();
 
     }
 
-
-    protected void registerContextMenu(){
-        registerForContextMenu(playerLabel1);
-        registerForContextMenu(playerLabel2);
-        registerForContextMenu(playerLabel3);
-        registerForContextMenu(playerLabel4);
-        registerForContextMenu(playerLabel5);
-        registerForContextMenu(playerLabel6);
-        registerForContextMenu(playerLabel7);
-        registerForContextMenu(playerLabel8);
+    protected void createDialog(){
+        createPlayerActionDialog();
     }
+
+    protected void createStatDelDialog(){
+
+        String button1String = "Да";
+        String button2String = "Нет";
+        AlertDialog.Builder statDelDialog = new AlertDialog.Builder(context);
+        statDelDialog.setTitle("Отменить действие?");  // заголовок
+        statDelDialog.setPositiveButton(button1String, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int arg1) {
+                Toast.makeText(context, Integer.toString(curentSatat),
+                        Toast.LENGTH_LONG).show();
+            }
+        });
+        statDelDialog.setNegativeButton(button2String, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int arg1) {
+
+            }
+        });
+        statDelDialog.setCancelable(true);
+        statDelDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            public void onCancel(DialogInterface dialog) {
+
+            }
+        });
+    }
+
+    protected void createPlayerActionDialog(){
+        final String[] mCatsName ={"1 очко", "2 очка", "фол", "Отмена"};
+        playerActionDialog = new AlertDialog.Builder(this);
+        playerActionDialog.setTitle("Команда "+(playerSelected<5?'1':'2')+" игрок "+Integer.toString(playerSelected < 5 ? playerSelected : playerSelected-4)); // заголовок для диалога
+        playerActionDialog.setItems(mCatsName, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+                switch (item) {
+                    case 0:
+                        addPoint(playerSelected, 1);
+                        break;
+                    case 1:
+                        addPoint(playerSelected, 2);
+                        break;
+                    case 2:
+                        addFoul(playerSelected);
+                        break;
+
+                }
+            }
+        });
+        playerActionDialog.setCancelable(false);
+        playerActionDialog.create();
+        playerActionDialog.show();
+    }
+
 
     protected void findElement() {
+        statLL           = (LinearLayout) findViewById(R.id.statLL);
         mTimerLabel      = (TextView) findViewById(R.id.mTimerLabel);
         btnTimerControl  = (Button) findViewById(R.id.btnTimerControl);
         playerLabel = new TextView[8];
-        playerLabel[0] = (TextView) findViewById(R.id.playerLabel1);
-        playerLabel[1] = (TextView) findViewById(R.id.playerLabel2);
-        playerLabel[2] = (TextView) findViewById(R.id.playerLabel3);
-        playerLabel[3] = (TextView) findViewById(R.id.playerLabel4);
-        playerLabel[4] = (TextView) findViewById(R.id.playerLabel5);
-        playerLabel[5] = (TextView) findViewById(R.id.playerLabel6);
-        playerLabel[6] = (TextView) findViewById(R.id.playerLabel7);
-        playerLabel[7] = (TextView) findViewById(R.id.playerLabel8);
 
         TeamPointCount = new TextView[2];
         TeamPointCount[0] =(TextView) findViewById(R.id.team1Count);
@@ -97,14 +126,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
     protected void setOnClickListener() {
         btnTimerControl.setOnClickListener(this);
         mTimerLabel.setOnClickListener(this);
-        playerLabel[0].setOnClickListener(this);
-        playerLabel[1].setOnClickListener(this);
-        playerLabel[2].setOnClickListener(this);
-        playerLabel[3].setOnClickListener(this);
-        playerLabel[4].setOnClickListener(this);
-        playerLabel[5].setOnClickListener(this);
-        playerLabel[6].setOnClickListener(this);
-        playerLabel[7].setOnClickListener(this);
+
+
     }
 
     protected void checkPointCount(){
@@ -127,9 +150,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
     }
 
     public void onClick(View v) {
+        boolean t = true;
         if (v == btnTimerControl || v == mTimerLabel) {
+            t = false;
             onClickBtnTimerControl(v);
-        }else{
+        }
+        if(t){
             for (int i = 0; i < playerLabel.length; i += 1){
                 if(v == playerLabel[i]){
                     onClickPlayer(v,i+1);
@@ -137,8 +163,19 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 }
             }
         }
+        if(t){
+            for (int i = 0; i < StatTextView.length; i += 1){
+                if(v == StatTextView[i]){
+                    curentSatat = i;
+                    onClickStatTextView(v);
+                    break;
+                }
+            }
+        }
+
     }
     public void onClickPlayerAction(View v){
+
         switch (v.getId()) {
             case R.id.onePointPlayer1:
                 addPoint(1,1);
@@ -217,41 +254,46 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     }
     protected void addPoint(int playerNum,int points){
-        TeamPointCount[playerNum < 5 ? 0 : 1].setText(Integer.toString(modelGame.addPoint(playerNum, points)));
+        int team_num = playerNum < 5 ? 0 : 1;
+        String points_count = Integer.toString(modelGame.addPoint(playerNum, points));
+        TextView stat_text_view = (TextView) new TextView(this);
+
+        stat_text_view.setText(
+                modelGame.getStringTimerVal() +
+                        ": Команда " + Integer.toString(team_num) +
+                        " Игрок " + Integer.toString(playerNum) +
+                        " забил " + Integer.toString(points) +
+                        " очк" + (points == 1 ? "о" : "а") + ";"
+        );
+        statLL.addView(stat_text_view, 0);
+        TeamPointCount[team_num].setText(points_count);
+        StatTextView[modelGame.GetStatCurent()] = stat_text_view;
+        stat_text_view.setOnClickListener(this);
         checkPointCount();
     }
     protected void addFoul(int playerNum){
+        int team_num = playerNum < 5 ? 0 : 1;
+        TextView stat_text_view = (TextView) new TextView(this);
+
+        stat_text_view.setText(
+                modelGame.getStringTimerVal()+
+                        ": Команда "+Integer.toString(team_num)+
+                        " Игрок " + Integer.toString(playerNum) +
+                        " получил фол;"
+        );
+        statLL.addView(stat_text_view,0);
         TeamFoulCount[playerNum < 5 ? 0 : 1].setText(Integer.toString(modelGame.addFoul(playerNum)));
+        StatTextView[modelGame.GetStatCurent()] = stat_text_view;
         checkFoulCount();
+    }
+    protected void onClickStatTextView(View v){
+        statDelDialog.setMessage("Действие " + (String) StatTextView[curentSatat].getText()); // сообщение
+        statDelDialog.show();
     }
 
     protected void onClickPlayer(View v,int playerNum){
         playerSelected = playerNum;
-        AlertDialog.Builder ad;
-        final String[] mCatsName ={"1 очко", "2 очка", "фол", "Отмена"};
-
-        ad = new AlertDialog.Builder(this);
-        ad.setTitle("Команда "+(playerSelected<5?'1':'2')+" игрок "+Integer.toString(playerSelected < 5 ? playerSelected : playerSelected-4)); // заголовок для диалога
-        ad.setItems(mCatsName, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int item) {
-                switch (item) {
-                    case 0:
-                        addPoint(playerSelected, 1);
-                        break;
-                    case 1:
-                        addPoint(playerSelected, 2);
-                        break;
-                    case 2:
-                        addFoul(playerSelected);
-                         break;
-
-                }
-            }
-        });
-        ad.setCancelable(false);
-        ad.create();
-        ad.show();
+        playerActionDialog.show();
     }
 
     public void onClickBtnTimerControl(View v) {
@@ -263,12 +305,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         }
     }
 
-    public String timeToString(long time) {
-        String millis = String.valueOf(time % 10);
-        String minute = String.valueOf(time / 60000);
-        String second = String.valueOf((time % 60000) / 1000);
-        return minute + ":" + second + "." + millis;
-    }
+
 
     public void startTimer() {
         // Create a new CountDownTimer to track the brew time
@@ -276,7 +313,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
             @Override
             public void onTick(long millisUntilFinished) {
                 modelGame.addTime((int) millisUntilFinished);
-                mTimerLabel.setText(timeToString(millisUntilFinished));
+                mTimerLabel.setText(modelGame.timeToString(millisUntilFinished));
             }
 
             @Override

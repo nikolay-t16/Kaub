@@ -16,7 +16,7 @@ public class ModelGame {
     protected int       PointLimit;
     protected int       TimerVal;
     protected int       GameId;
-
+    protected int       StatCurent;
     ModelGame(int gameId, int pointLimit, int foulLimit, int timerLimit){
         GameId      = gameId;
         GameStat    = new int[200][3];
@@ -26,6 +26,9 @@ public class ModelGame {
         FoulLimit   = foulLimit;
         addTime(timerLimit);
 
+    }
+    public int GetStatCurent(){
+        return StatCurent;
     }
 
     /**
@@ -39,6 +42,7 @@ public class ModelGame {
         while (GameStat[i][0]!=0){
          i++;
         };
+        StatCurent = i;
         GameStat[i][0] = player_num;
         GameStat[i][1] = action_num;
         GameStat[i][2] = TimerVal;
@@ -62,6 +66,16 @@ public class ModelGame {
         return TimerVal;
     }
 
+    public String timeToString(long time) {
+        String millis = String.valueOf(time % 10);
+        String minute = String.valueOf(time / 60000);
+        String second = String.valueOf((time % 60000) / 1000);
+        return minute + ":" + second + "." + millis;
+    }
+
+    public String getStringTimerVal(){
+        return timeToString(getTimerVal());
+    }
     public int checkPointCount(){
         if(PointCount[0]>=PointLimit) {
             return 1;
