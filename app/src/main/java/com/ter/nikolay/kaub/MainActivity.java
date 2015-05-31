@@ -53,18 +53,27 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     protected void createDialog(){
         createPlayerActionDialog();
+        createStatDelDialog();
     }
 
     protected void createStatDelDialog(){
 
         String button1String = "Да";
         String button2String = "Нет";
-        AlertDialog.Builder statDelDialog = new AlertDialog.Builder(context);
+
+        statDelDialog = new AlertDialog.Builder(context);
         statDelDialog.setTitle("Отменить действие?");  // заголовок
         statDelDialog.setPositiveButton(button1String, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int arg1) {
-                Toast.makeText(context, Integer.toString(curentSatat),
-                        Toast.LENGTH_LONG).show();
+                statLL.removeView(StatTextView[curentSatat]);  //StatTextView[curentSatat].removeView
+                int[][] stat = modelGame.delStat(curentSatat);
+                TeamPointCount[0].setText(Integer.toString(stat[0][0]));
+                TeamPointCount[1].setText(Integer.toString(stat[0][1]));
+                TeamFoulCount[0].setText(Integer.toString(stat[1][0]));
+                TeamFoulCount[0].setText(Integer.toString(stat[1][1]));
+                checkPointCount();
+                checkFoulCount();
+
             }
         });
         statDelDialog.setNegativeButton(button2String, new DialogInterface.OnClickListener() {
@@ -83,7 +92,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     protected void createPlayerActionDialog(){
         final String[] mCatsName ={"1 очко", "2 очка", "фол", "Отмена"};
         playerActionDialog = new AlertDialog.Builder(this);
-        playerActionDialog.setTitle("Команда "+(playerSelected<5?'1':'2')+" игрок "+Integer.toString(playerSelected < 5 ? playerSelected : playerSelected-4)); // заголовок для диалога
+        playerActionDialog.setTitle("Команда " + (playerSelected < 5 ? '1' : '2') + " игрок " + Integer.toString(playerSelected < 5 ? playerSelected : playerSelected-4)); // заголовок для диалога
         playerActionDialog.setItems(mCatsName, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int item) {
@@ -101,9 +110,13 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 }
             }
         });
-        playerActionDialog.setCancelable(false);
+        playerActionDialog.setCancelable(true);
+        playerActionDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            public void onCancel(DialogInterface dialog) {
+
+            }
+        });
         playerActionDialog.create();
-        playerActionDialog.show();
     }
 
 
@@ -134,12 +147,14 @@ public class MainActivity extends Activity implements View.OnClickListener {
         int CheckPointCount = modelGame.checkPointCount();
         if(CheckPointCount>0){
             stopGame("Команда " + Integer.toString(CheckPointCount) + " выйграла");
+        }else{
+            mTimerLabel.setTextColor(getResources().getColor(R.color.black));
         }
     }
     protected void checkFoulCount(){
         int ChekFoulCount = modelGame.chekFoulCount();
         if(modelGame.chekFoulCount() > 0){
-            Toast.makeText(MainActivity.instanse, "Команда "+Integer.toString(ChekFoulCount)+" выйграла", Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.instanse, "Команда "+Integer.toString(ChekFoulCount)+" превысила лимит фолов", Toast.LENGTH_LONG).show();
         }
     }
     @Override
@@ -284,9 +299,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
         statLL.addView(stat_text_view,0);
         TeamFoulCount[playerNum < 5 ? 0 : 1].setText(Integer.toString(modelGame.addFoul(playerNum)));
         StatTextView[modelGame.GetStatCurent()] = stat_text_view;
+        stat_text_view.setOnClickListener(this);
         checkFoulCount();
     }
     protected void onClickStatTextView(View v){
+        Toast.makeText(MainActivity.instanse, ""+Integer.toString(curentSatat)+" ", Toast.LENGTH_LONG).show();
         statDelDialog.setMessage("Действие " + (String) StatTextView[curentSatat].getText()); // сообщение
         statDelDialog.show();
     }

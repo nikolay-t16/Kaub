@@ -95,4 +95,22 @@ public class ModelGame {
         return 0;
     }
 
+    public int[][] delStat(int curentSatat){
+        int[][] res = new int[2][2];
+        if(GameStat[curentSatat][1]==1){
+            PointCount[getTeamNum(GameStat[curentSatat][0])]--;
+        }
+        if(GameStat[curentSatat][1]==2){
+            PointCount[getTeamNum(GameStat[curentSatat][0])] +=-2;
+        }
+        if(GameStat[curentSatat][1]==3){
+            FoulCount[getTeamNum(GameStat[curentSatat][0])]--;
+        }
+        res[0] = PointCount;
+        res[1] = FoulCount;
+        return  res;
+    }
+    public int getTeamNum(int playerNum){
+        return playerNum < 5 ? 0 : 1;
+    }
 }
