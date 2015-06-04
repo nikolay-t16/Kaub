@@ -96,7 +96,6 @@ public class ModelGame {
     }
 
     public int[][] delStat(int curentSatat){
-        int[][] res = new int[2][2];
         if(GameStat[curentSatat][1]==1){
             PointCount[getTeamNum(GameStat[curentSatat][0])]--;
         }
@@ -106,6 +105,12 @@ public class ModelGame {
         if(GameStat[curentSatat][1]==3){
             FoulCount[getTeamNum(GameStat[curentSatat][0])]--;
         }
+
+        return  getStat();
+    }
+
+    public int[][] getStat(){
+        int[][] res = new int[2][2];
         res[0] = PointCount;
         res[1] = FoulCount;
         return  res;

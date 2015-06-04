@@ -9,6 +9,7 @@ import android.os.CountDownTimer;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -17,7 +18,7 @@ import android.widget.Toast;
 public class MainActivity extends Activity implements View.OnClickListener {
 
     public static MainActivity instanse;
-    protected ModelGame      modelGame;
+    protected static ModelGame      modelGame;
     protected TextView       mTimerLabel;
     protected TextView[]     playerLabel;
 
@@ -30,7 +31,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     protected int            curentSatat = 0;
     protected CountDownTimer mTimer;
     protected Button         btnTimerControl;
-    protected Boolean        mTimerIsOn = false;
+    protected static Boolean        mTimerIsOn = false;
 
     protected AlertDialog.Builder playerActionDialog;
     protected AlertDialog.Builder statDelDialog;
@@ -38,17 +39,35 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        instanse = this;
-        modelGame = new ModelGame(1, 3, 2, 600000);
-        StatTextView = new TextView[100];
+
+
         super.onCreate(savedInstanceState);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.activity_main);
         findElement();
         setOnClickListener();
-        mTimerLabel.setText(modelGame.getStringTimerVal());
         context = MainActivity.this;
         createDialog();
+        setDefaultValues();
 
+    }
+    protected void setDefaultValues(){
+        instanse = this;
+        if(modelGame==null){
+        modelGame = new ModelGame(1, 3, 2, 600000);
+        }
+        mTimerLabel.setText(modelGame.getStringTimerVal());
+        StatTextView = new TextView[100];
+        int[][] stat = modelGame.getStat();
+        TeamPointCount[0].setText(Integer.toString(stat[0][0]));
+        TeamPointCount[1].setText(Integer.toString(stat[0][1]));
+        TeamFoulCount[0].setText(Integer.toString(stat[1][0]));
+        TeamFoulCount[1].setText(Integer.toString(stat[1][1]));
+        checkFoulCount();
+        checkPointCount();
+        if(mTimerIsOn){
+            startTimer();
+        }
     }
 
     protected void createDialog(){
@@ -70,7 +89,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 TeamPointCount[0].setText(Integer.toString(stat[0][0]));
                 TeamPointCount[1].setText(Integer.toString(stat[0][1]));
                 TeamFoulCount[0].setText(Integer.toString(stat[1][0]));
-                TeamFoulCount[0].setText(Integer.toString(stat[1][1]));
+                TeamFoulCount[1].setText(Integer.toString(stat[1][1]));
                 checkPointCount();
                 checkFoulCount();
 
