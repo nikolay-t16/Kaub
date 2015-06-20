@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,15 +18,17 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity implements View.OnClickListener {
 
+    private static final String TAG = "myLogs";
+
     public static MainActivity instanse;
-    protected static ModelGame      modelGame;
+    protected static ModelGame modelGame;
     protected TextView       mTimerLabel;
     protected TextView[]     playerLabel;
 
     protected TextView[]     TeamPointCount;
     protected TextView[]     TeamFoulCount;
     protected LinearLayout   statLL;
-    protected TextView[]     StatTextView;
+    public TextView[]        StatTextView;
 
     protected int            playerSelected = 0;
     protected int            curentSatat = 0;
@@ -74,7 +77,26 @@ public class MainActivity extends Activity implements View.OnClickListener {
         createPlayerActionDialog();
         createStatDelDialog();
     }
+    public void deleteStatByView(View v){
+        for (int i = 0; i < StatTextView.length; i += 1){
+            if(v == MainActivity.instanse.StatTextView[i]){
+                Log.i(TAG, "Нашел!" + Integer.toString(i));
+                MainActivity.instanse.deleteStat(i);
 
+                break;
+            }
+        }
+    }
+    public void deleteStat(Integer indexStat){
+        statLL.removeView(StatTextView[indexStat]);
+        int[][] stat = modelGame.delStat(indexStat);
+        TeamPointCount[0].setText(Integer.toString(stat[0][0]));
+        TeamPointCount[1].setText(Integer.toString(stat[0][1]));
+        TeamFoulCount[0].setText(Integer.toString(stat[1][0]));
+        TeamFoulCount[1].setText(Integer.toString(stat[1][1]));
+        checkPointCount();
+        checkFoulCount();
+    }
     protected void createStatDelDialog(){
 
         String button1String = "Да";
@@ -84,14 +106,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         statDelDialog.setTitle("Отменить действие?");  // заголовок
         statDelDialog.setPositiveButton(button1String, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int arg1) {
-                statLL.removeView(StatTextView[curentSatat]);  //StatTextView[curentSatat].removeView
-                int[][] stat = modelGame.delStat(curentSatat);
-                TeamPointCount[0].setText(Integer.toString(stat[0][0]));
-                TeamPointCount[1].setText(Integer.toString(stat[0][1]));
-                TeamFoulCount[0].setText(Integer.toString(stat[1][0]));
-                TeamFoulCount[1].setText(Integer.toString(stat[1][1]));
-                checkPointCount();
-                checkFoulCount();
+                deleteStat(curentSatat);
 
             }
         });
@@ -287,38 +302,43 @@ public class MainActivity extends Activity implements View.OnClickListener {
         }
 
     }
+
+    protected void addStatTextView(String statText){
+        TextView stat_text_view = (TextView) new TextView(this);
+
+        stat_text_view.setText(statText);
+        statLL.addView(stat_text_view, 0);
+        StatTextView[modelGame.GetStatCurent()] = stat_text_view;
+        //stat_text_view.setOnClickListener(this);
+        //set touch listeners
+        stat_text_view.setOnTouchListener(new ChoiceTouchStatListener());
+//set drag listeners
+        stat_text_view.setOnDragListener(new ChoiceStatDragListener());
+    }
+
     protected void addPoint(int playerNum,int points){
         int team_num = playerNum < 5 ? 0 : 1;
         String points_count = Integer.toString(modelGame.addPoint(playerNum, points));
-        TextView stat_text_view = (TextView) new TextView(this);
-
-        stat_text_view.setText(
-                modelGame.getStringTimerVal() +
-                        ": Команда " + Integer.toString(team_num) +
-                        " Игрок " + Integer.toString(playerNum) +
-                        " забил " + Integer.toString(points) +
-                        " очк" + (points == 1 ? "о" : "а") + ";"
-        );
-        statLL.addView(stat_text_view, 0);
+        String stat_text = modelGame.getStringTimerVal() +
+                ": Команда " + Integer.toString(team_num) +
+                " Игрок " + Integer.toString(playerNum) +
+                " забил " + Integer.toString(points) +
+                " очк" + (points == 1 ? "о" : "а") + ";";
+        addStatTextView(stat_text);
         TeamPointCount[team_num].setText(points_count);
-        StatTextView[modelGame.GetStatCurent()] = stat_text_view;
-        stat_text_view.setOnClickListener(this);
+
+
         checkPointCount();
     }
     protected void addFoul(int playerNum){
         int team_num = playerNum < 5 ? 0 : 1;
-        TextView stat_text_view = (TextView) new TextView(this);
-
-        stat_text_view.setText(
-                modelGame.getStringTimerVal()+
-                        ": Команда "+Integer.toString(team_num)+
-                        " Игрок " + Integer.toString(playerNum) +
-                        " получил фол;"
-        );
-        statLL.addView(stat_text_view,0);
+       String stat_text = modelGame.getStringTimerVal()+
+                            ": Команда "+Integer.toString(team_num)+
+                            " Игрок " + Integer.toString(playerNum) +
+                            " получил фол;"
+                            ;
         TeamFoulCount[playerNum < 5 ? 0 : 1].setText(Integer.toString(modelGame.addFoul(playerNum)));
-        StatTextView[modelGame.GetStatCurent()] = stat_text_view;
-        stat_text_view.setOnClickListener(this);
+        addStatTextView(stat_text);
         checkFoulCount();
     }
     protected void onClickStatTextView(View v){
