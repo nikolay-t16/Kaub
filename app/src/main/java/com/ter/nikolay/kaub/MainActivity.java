@@ -34,6 +34,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     protected int            curentSatat = 0;
     protected CountDownTimer mTimer;
     protected Button         btnTimerControl;
+    protected Button         btnRestart;
     protected static Boolean        mTimerIsOn = false;
 
     protected AlertDialog.Builder playerActionDialog;
@@ -42,8 +43,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.activity_main);
@@ -51,8 +50,31 @@ public class MainActivity extends Activity implements View.OnClickListener {
         setOnClickListener();
         context = MainActivity.this;
         createDialog();
-        setDefaultValues();
-
+        setValues();
+    }
+    protected void initModelGame(){
+        modelGame = new ModelGame(1, 3, 2, 600000);
+    }
+    protected void setValues(){
+        instanse = this;
+        if(modelGame==null){
+            initModelGame();
+        }
+        setValuesFromModel();
+        if(mTimerIsOn){
+            startTimer();
+        }
+    }
+    protected void setValuesFromModel(){
+        mTimerLabel.setText(modelGame.getStringTimerVal());
+        StatTextView = new TextView[100];
+        int[][] stat = modelGame.getStat();
+        TeamPointCount[0].setText(Integer.toString(stat[0][0]));
+        TeamPointCount[1].setText(Integer.toString(stat[0][1]));
+        TeamFoulCount[0].setText(Integer.toString(stat[1][0]));
+        TeamFoulCount[1].setText(Integer.toString(stat[1][1]));
+        checkFoulCount();
+        checkPointCount();
     }
     protected void setDefaultValues(){
         instanse = this;
@@ -158,6 +180,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         statLL           = (LinearLayout) findViewById(R.id.statLL);
         mTimerLabel      = (TextView) findViewById(R.id.mTimerLabel);
         btnTimerControl  = (Button) findViewById(R.id.btnTimerControl);
+        btnRestart       = (Button) findViewById(R.id.btnRestart);
         playerLabel = new TextView[8];
 
         TeamPointCount = new TextView[2];
@@ -172,6 +195,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     protected void setOnClickListener() {
         btnTimerControl.setOnClickListener(this);
+        btnRestart.setOnClickListener(this);
         mTimerLabel.setOnClickListener(this);
 
 
@@ -204,6 +228,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
             t = false;
             onClickBtnTimerControl(v);
         }
+        if (v == btnRestart) {
+            t = false;
+            onClickBtnRestart();
+        }
+
         if(t){
             for (int i = 0; i < playerLabel.length; i += 1){
                 if(v == playerLabel[i]){
@@ -221,6 +250,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 }
             }
         }
+
 
     }
     public void onClickPlayerAction(View v){
@@ -361,6 +391,15 @@ public class MainActivity extends Activity implements View.OnClickListener {
         }
     }
 
+    protected void onClickBtnRestart(){
+        restart();
+    }
+    protected void restart(){
+        stopTimer();
+        initModelGame();
+        setValuesFromModel();
+        statLL.removeAllViews();
+    }
 
 
     public void startTimer() {
