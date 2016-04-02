@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -16,9 +18,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class MainActivity extends Activity implements View.OnClickListener {
 
-    private static final String TAG = "myLogs";
+    public static final String TAG = "myLogs";
 
     public static MainActivity instanse;
     protected static ModelGame modelGame;
@@ -40,7 +44,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     protected AlertDialog.Builder playerActionDialog;
     protected AlertDialog.Builder statDelDialog;
     Context context;
-
+    DBHelper sqlHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,10 +55,59 @@ public class MainActivity extends Activity implements View.OnClickListener {
         context = MainActivity.this;
         createDialog();
         setValues();
+        restoreStat();
+        Log.i(TAG, "Время!" + Integer.toString(modelGame.getTimerVal()));
+        // создаем базу данных
+        DBHelper dbOpenHelper = new DBHelper(this, "kaub");
+
+        SQLiteDatabase database= dbOpenHelper.getWritableDatabase();
+        ArrayList data = new ArrayList();
+
+        Cursor dataCursor = database.query(
+                "sqlite_master",
+                new String[] {"name"},
+                null, null, null, null,
+                "name");
+        dataCursor.moveToFirst();
+
+
+        if(!dataCursor.isAfterLast()){
+            do {
+               // String image =dataCursor.getString(1);
+                String name = dataCursor.getString(0);
+                Log.i(TAG, name);
+
+            } while (dataCursor.moveToNext());
+        }
+        dataCursor.close();
+       /* Cursor userCursor = sqlHelper.myDataBase.rawQuery("SELECT name FROM sqlite_master WHERE type='table'", null);
+        userCursor.moveToFirst();
+        while (userCursor.isAfterLast() == false) {
+            Log.i(TAG, userCursor.getString(0));
+            userCursor.moveToNext();
+        }*/
+
+    }
+
+    protected void restoreStat(){
+        int[][] stat = modelGame.GameStat;
+        for (int i = 0; i < stat.length; i += 1){
+            if(modelGame.GameStat[i][0]!=0){
+                int team_num = modelGame.GameStat[i][0] < 5 ? 0 : 1;
+                String stat_text = modelGame.makeStatText(
+                        modelGame.GameStat[i][1],
+                        modelGame.GameStat[i][0],
+                        modelGame.timeToString(modelGame.GameStat[i][2])
+                );
+                addStatTextView(stat_text);
+
+            }
+        }
     }
     protected void initModelGame(){
-        modelGame = new ModelGame(1, 3, 2, 600000);
+        modelGame = new ModelGame(1, 21, 5, 600000);
     }
+
     protected void setValues(){
         instanse = this;
         if(modelGame==null){
@@ -102,7 +155,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
     public void deleteStatByView(View v){
         for (int i = 0; i < StatTextView.length; i += 1){
             if(v == MainActivity.instanse.StatTextView[i]){
-                Log.i(TAG, "Нашел!" + Integer.toString(i));
                 MainActivity.instanse.deleteStat(i);
 
                 break;
@@ -320,13 +372,13 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 addFoul(7);
                 break;
             case R.id.onePointPlayer8:
-                addPoint(4,1);
+                addPoint(8,1);
                 break;
             case R.id.twoPointPlayer8:
-                addPoint(4,2);
+                addPoint(8,2);
                 break;
             case R.id.foulPlayer8:
-                addFoul(4);
+                addFoul(8);
                 break;
 
         }
@@ -399,6 +451,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         initModelGame();
         setValuesFromModel();
         statLL.removeAllViews();
+        Log.i(TAG, "Время!" + Integer.toString(modelGame.getTimerVal()));
     }
 
 
