@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/scroll"
@@ -13,7 +14,21 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true">
 
+
+
+            <Button
+                android:id="@+id/btnRestart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Restart"
+                android:textSize="8pt">
+            </Button>
+        </LinearLayout>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -50,7 +65,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="left"
             android:text="@string/team1"
-            android:textSize="10pt">
+            android:textSize="9pt">
         </TextView>
 
 
@@ -66,7 +81,7 @@
                 android:layout_marginLeft="5pt"
                 android:layout_marginRight="5pt"
                 android:text="0"
-                android:textSize="10pt">
+                android:textSize="9pt">
             </TextView>
 
             <TextView
@@ -74,7 +89,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:text=":"
-                android:textSize="10pt">
+                android:textSize="9pt">
             </TextView>
 
             <TextView
@@ -84,7 +99,7 @@
                 android:layout_marginLeft="5pt"
                 android:layout_marginRight="5pt"
                 android:text="0"
-                android:textSize="10pt">
+                android:textSize="9pt">
             </TextView>
         </LinearLayout>
 
@@ -98,7 +113,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Команда2"
-                android:textSize="10pt">
+                android:textSize="9pt">
             </TextView>
         </LinearLayout>
 
@@ -115,7 +130,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="left"
             android:text="Фолы"
-            android:textSize="10pt">
+            android:textSize="7pt">
         </TextView>
 
 
@@ -177,26 +192,29 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:id="@+id/playerLabel1"
-                android:text="@string/team1PalyerName1"/>
+                android:text="@string/team1PalyerName1"
+                android:textAlignment="gravity"
+                android:gravity="center_vertical" />
 
             <Button
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="32dp"
                 android:id="@+id/onePointPlayer1"
                 android:layout_marginLeft="20pt"
                 android:onClick="onClickPlayerAction"
                 android:text="1 очко"
-                android:textSize="4pt"
-                />
+                android:textSize="4pt"/>
             <Button
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="32dp"
                 android:id="@+id/twoPointPlayer1"
                 android:onClick="onClickPlayerAction"
                 android:layout_marginLeft="10pt"
@@ -204,7 +222,7 @@
                 android:textSize="4pt"/>
             <Button
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="32dp"
                 android:id="@+id/foulPlayer1"
                 android:onClick="onClickPlayerAction"
                 android:layout_marginLeft="10pt"
@@ -214,16 +232,20 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp">
 
             <TextView
                 android:id="@+id/playerLabel2"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:text="@string/team1PalyerName2"/>
+                android:text="@string/team1PalyerName2"
+                android:textAlignment="gravity"
+                android:gravity="center_vertical" />
             <Button
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="32dp"
                 android:id="@+id/onePointPlayer2"
                 android:layout_marginLeft="20pt"
                 android:onClick="onClickPlayerAction"
@@ -232,7 +254,7 @@
                 />
             <Button
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="32dp"
                 android:id="@+id/twoPointPlayer2"
                 android:onClick="onClickPlayerAction"
                 android:layout_marginLeft="10pt"
@@ -240,7 +262,7 @@
                 android:textSize="4pt"/>
             <Button
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="32dp"
                 android:id="@+id/foulPlayer2"
                 android:onClick="onClickPlayerAction"
                 android:layout_marginLeft="10pt"
@@ -250,16 +272,20 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp">
 
             <TextView
                 android:id="@+id/playerLabel3"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:text="@string/team1PalyerName3"/>
+                android:text="@string/team1PalyerName3"
+                android:textAlignment="gravity"
+                android:gravity="center_vertical" />
             <Button
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="32dp"
                 android:id="@+id/onePointPlayer3"
                 android:layout_marginLeft="20pt"
                 android:onClick="onClickPlayerAction"
@@ -268,7 +294,7 @@
                 />
             <Button
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="32dp"
                 android:id="@+id/twoPointPlayer3"
                 android:onClick="onClickPlayerAction"
                 android:layout_marginLeft="10pt"
@@ -276,7 +302,7 @@
                 android:textSize="4pt"/>
             <Button
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="32dp"
                 android:id="@+id/foulPlayer3"
                 android:onClick="onClickPlayerAction"
                 android:layout_marginLeft="10pt"
@@ -286,16 +312,20 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp">
 
             <TextView
                 android:id="@+id/playerLabel4"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:text="@string/team1PalyerName4"/>
+                android:text="@string/team1PalyerName4"
+                android:textAlignment="gravity"
+                android:gravity="center_vertical" />
             <Button
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="32dp"
                 android:id="@+id/onePointPlayer4"
                 android:layout_marginLeft="20pt"
                 android:onClick="onClickPlayerAction"
@@ -304,7 +334,7 @@
                 />
             <Button
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="32dp"
                 android:id="@+id/twoPointPlayer4"
                 android:onClick="onClickPlayerAction"
                 android:layout_marginLeft="10pt"
@@ -312,7 +342,7 @@
                 android:textSize="4pt"/>
             <Button
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="32dp"
                 android:id="@+id/foulPlayer4"
                 android:onClick="onClickPlayerAction"
                 android:layout_marginLeft="10pt"
@@ -338,16 +368,20 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp">
 
             <TextView
                 android:id="@+id/playerLabel5"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:text="Игрок 1"/>
+                android:text="Игрок 1"
+                android:textAlignment="gravity"
+                android:gravity="center_vertical" />
             <Button
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="32dp"
                 android:id="@+id/onePointPlayer5"
                 android:layout_marginLeft="20pt"
                 android:onClick="onClickPlayerAction"
@@ -356,7 +390,7 @@
                 />
             <Button
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="32dp"
                 android:id="@+id/twoPointPlayer5"
                 android:onClick="onClickPlayerAction"
                 android:layout_marginLeft="10pt"
@@ -364,7 +398,7 @@
                 android:textSize="4pt"/>
             <Button
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="32dp"
                 android:id="@+id/foulPlayer5"
                 android:onClick="onClickPlayerAction"
                 android:layout_marginLeft="10pt"
@@ -374,16 +408,20 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp">
 
             <TextView
                 android:id="@+id/playerLabel6"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:text="Игрок 2"/>
+                android:text="Игрок 2"
+                android:textAlignment="gravity"
+                android:gravity="center_vertical" />
             <Button
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="32dp"
                 android:id="@+id/onePointPlayer6"
                 android:layout_marginLeft="20pt"
                 android:onClick="onClickPlayerAction"
@@ -392,7 +430,7 @@
                 />
             <Button
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="32dp"
                 android:id="@+id/twoPointPlayer6"
                 android:onClick="onClickPlayerAction"
                 android:layout_marginLeft="10pt"
@@ -400,7 +438,7 @@
                 android:textSize="4pt"/>
             <Button
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="32dp"
                 android:id="@+id/foulPlayer6"
                 android:onClick="onClickPlayerAction"
                 android:layout_marginLeft="10pt"
@@ -410,16 +448,20 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp">
 
             <TextView
                 android:id="@+id/playerLabel7"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:text="Игрок 3"/>
+                android:text="Игрок 3"
+                android:textAlignment="gravity"
+                android:gravity="center_vertical" />
             <Button
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="32dp"
                 android:id="@+id/onePointPlayer7"
                 android:layout_marginLeft="20pt"
                 android:onClick="onClickPlayerAction"
@@ -428,7 +470,7 @@
                 />
             <Button
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="32dp"
                 android:id="@+id/twoPointPlayer7"
                 android:onClick="onClickPlayerAction"
                 android:layout_marginLeft="10pt"
@@ -436,7 +478,7 @@
                 android:textSize="4pt"/>
             <Button
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="32dp"
                 android:id="@+id/foulPlayer7"
                 android:onClick="onClickPlayerAction"
                 android:layout_marginLeft="10pt"
@@ -446,16 +488,20 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp">
 
             <TextView
                 android:id="@+id/playerLabel8"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:text="@string/team1PalyerName4"/>
+                android:text="@string/team1PalyerName4"
+                android:textAlignment="gravity"
+                android:gravity="center_vertical" />
             <Button
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="32dp"
                 android:id="@+id/onePointPlayer8"
                 android:layout_marginLeft="20pt"
                 android:onClick="onClickPlayerAction"
@@ -464,7 +510,7 @@
                 />
             <Button
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="32dp"
                 android:id="@+id/twoPointPlayer8"
                 android:onClick="onClickPlayerAction"
                 android:layout_marginLeft="10pt"
@@ -472,7 +518,7 @@
                 android:textSize="4pt"/>
             <Button
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="32dp"
                 android:id="@+id/foulPlayer8"
                 android:onClick="onClickPlayerAction"
                 android:layout_marginLeft="10pt"
@@ -484,7 +530,8 @@
         android:id="@+id/statLL"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginTop="20dp">
     </LinearLayout>
     </LinearLayout>
 </ScrollView>

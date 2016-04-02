@@ -46,10 +46,11 @@ public class ModelGame {
         GameStat[i][0] = player_num;
         GameStat[i][1] = action_num;
         GameStat[i][2] = TimerVal;
+
     }
 
     public int addFoul(int player_num){
-        addStat(player_num,3);
+        addStat(player_num, 3);
         return FoulCount[player_num>4?1:0]+=1;
     }
 
@@ -118,4 +119,35 @@ public class ModelGame {
     public int getTeamNum(int playerNum){
         return playerNum < 5 ? 0 : 1;
     }
+
+    public String makeStatText(int action,int playerNum,String Time){
+        String stat_text="";
+        if(action==3){
+            stat_text = makeStatTextAddFoul(playerNum,Time);
+        }
+        if(action==1||action==2){
+           stat_text = makeStatTextAddPoint(playerNum,Time,action);
+        }
+        return stat_text;
+    }
+
+    protected String makeStatTextAddFoul(int playerNum,String time){
+
+        return time+
+                ": Команда "+Integer.toString(getTeamNum(playerNum)) +
+                " Игрок " + Integer.toString(playerNum) +
+                " получил фол;";
+
+    }
+    protected String makeStatTextAddPoint(int playerNum,String time,int points){
+
+        return time +
+                ": Команда " + Integer.toString(getTeamNum(playerNum)) +
+                " Игрок " + Integer.toString(playerNum) +
+                " забил " + Integer.toString(points) +
+                " очк" + (points == 1 ? "о" : "а") + ";";
+
+    }
+
+    //public
 }
